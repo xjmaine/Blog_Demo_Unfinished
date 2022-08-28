@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="site-head" >
+	<meta charset="ISO-8859-1">
+	<title>Blog</title>
+	
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<link rel="icon" th:href="@{/img/favicon.co}" />
+	<script type="text/javascript" th:src="@{js/jquery-3.1.0.min.js}"></script>
+	<script type="text/javascript" th:src="@{js/blog-scripts.js}"></script>
+	
+	<!-- <meta th:include="this :: head" th:remove="tag"/>-->
+</head>
+<body>
+	<h1>Welcome to this basic blog page!</h1>
+	<!-- dynamic context injection -->
+	Current Date/Time: <b th:text="${execInfo.now.time}"></b>
+	
+	<header th:fragment="site-header" th:remove="tag">
+	
+	<header>
+		<a  th:href="@{/}"><img th:src="@{/img/site-logo.png}" /></a>
+		<a  th:href="@{/}">Home</a>
+		<a  th:href="@{/users/login}">Login</a>
+		<a  th:href="@{/users/register}">Register</a>
+		<a  th:href="@{/posts}">Posts</a>
+		<a  th:href="@{/posts/create}">Create Post</a>
+		<a  th:href="@{/users}">Users</a>
+	
+	<div id="logged-in-info"> 
+		<span>Hello, <b>(user)</b></span>
+		
+		<form method="post" th:action="@{/users/logout}">
+			<input type="submit" value="Logout"/>
+		</form>
+	</div>
+	</header>
+	
+	<ul id="messages" th:with="notifyMessages=${session[T(io.rddghs.services.NotificationServiceImpl).NOTIFY_MSG_SESSION_KEY]}">
+      <li th:each="msg : ${notifyMessages}" th:text="${msg.text}"
+           th:class="${#strings.toLowerCase(msg.type)}">
+      </li>
+      <!-- <span th:if="${notifyMessages}" th:remove="all" th:text="${session.remove(T(io.rddghs.services.NotificationService).NOTIFY_MSG_SESSION_KEY)}"></span>-->
+
+    </ul>
+    
+	</header> 
+	
+	
+		
+	<footer th:fragment="site-footer">
+		&copy; Spring MVC Blog System, 2022
+	</footer>
+
+</body>
+</html>
